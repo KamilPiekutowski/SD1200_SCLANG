@@ -2,6 +2,7 @@ SDDef {
 
 	var synthDef;
 	var oscname;
+	var synth;
 
     synthDef {
         ^synthDef
@@ -23,14 +24,15 @@ SDDef {
 		synthDef = synthdef;
 		"init".postln;
 		synthDef.name.postln;
-
+		synthDef.add;
+		synth = Synth.new(synthDef.name);
 		//get the fx list and send it back
 		OSCdef.new(
 			\button,
 			{
 				arg msg, time, addr, recvPort;
 				"sending fx list".postln;
-				this.send_fx_list();
+				this.collect_and_send_fx_list();
 			},
 			'/get_fx_list'
 		);
@@ -39,8 +41,8 @@ SDDef {
 			\qml_gui_ctrl,
 			{
 				arg msg, time, addr, recvPort;
-				"sending fx list".postln;
-				this.collect_and_send_fx_list();
+				msg.postln;
+				synth.set(\freqL, msg[1], \freqR, msg[2]);
 			},
 			'/qml_gui_ctrl'
 		);
