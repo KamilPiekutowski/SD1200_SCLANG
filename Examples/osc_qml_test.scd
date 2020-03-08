@@ -8,7 +8,7 @@ a = SDDef.new(SynthDef.new(\sinosc, {
 	Out.ar(0,sig);
 }));
 
-a.synthDef.add;
+//a.synthDef.add;
 
 )
 };
