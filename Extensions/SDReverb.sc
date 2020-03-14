@@ -24,13 +24,13 @@ SDReverb
 		synthDef.add;
 	}
 	synthSet { | synth, msg |
-		//var ctlName = ["freqL", "freqR", "sig"];
+		var ctlName = ["freqL", "freqR", "sig"];
 		msg.postln;
-		//synth.set(
-		//	\sig, msg[3].asInteger,
-		//	\freqL, msg[2],
-		//	\freqR, msg[1],
-		//);
+		synth.set(
+			\sig, msg[3].asInteger,
+			\freqL, msg[2],
+			\freqR, msg[1],
+		);
 	}
 
 }
