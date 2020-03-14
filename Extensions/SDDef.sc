@@ -84,7 +84,7 @@ SDDef {
 				synthDef.name.postln;
 				Routine({
 					"before wait".postln;
-					1.wait;
+					0.5.wait;
 					synth = Synth.new(synthDef.name);
 					"after wait".postln;
 				}).play;
@@ -95,6 +95,7 @@ SDDef {
 
 	//SynthDef factory method
 	getSynthDef { | synthDefName |
+		Server.hardFreeAll;
 		switch (synthDefName,
 
 			\Reverb_slider2d,   {^SDReverb.new()},
