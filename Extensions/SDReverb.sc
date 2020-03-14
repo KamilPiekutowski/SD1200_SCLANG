@@ -11,7 +11,7 @@ SDReverb
 
 	init {
 		synthDef = SynthDef.new(\sinosc, {
-			arg freqL = 0.5, freqR = 0.5, sig = 1;
+			arg freqL = 0.5, freqR = 0.5, sig = 0;
 			sig = SinOsc.ar([freqL * 5000, freqR * 5000]) * sig * 0.80;
 			Out.ar(0,sig);
 		});
