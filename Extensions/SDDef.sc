@@ -95,7 +95,8 @@ SDDef {
 
 	//SynthDef factory method
 	getSynthDef { | synthDefName |
-		Server.hardFreeAll;
+		Server.hardFreeAll;		
+    
 		switch (synthDefName,
 
 			\Reverb_slider2d,   {^SDReverb.new()},
