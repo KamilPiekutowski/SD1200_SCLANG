@@ -19,20 +19,20 @@ SDDef {
 	var knob7;
 
 
-    synthDef {
-        ^synthDef
-    }
+    //synthDef {
+    //    ^synthDef
+    //}
 
 	// collect and send a list of predefined effects
 	collect_and_send_fx_list {
 		var oscmsg;
 		fxList = [
-		"Reverb_slider2d",
-		"DelayQuant_slider2d",
-		"DelayMs_slider2d",
-		"Distortion_slider2d",
-		"Flanger_slide2d",
-	];
+			"Reverb_slider2d",
+			"DelayQuant_slider2d",
+			"DelayMs_slider2d",
+			"Distortion_slider2d",
+			"Flanger_slide2d",
+		];
 		oscmsg = NetAddr.new("127.0.0.1", 7770);
 		fxList.do {arg x; oscmsg.sendMsg("/fx_list", x)};
 		oscmsg.sendMsg("/done");
@@ -59,9 +59,14 @@ SDDef {
 			\qml_gui_ctrl,
 			{
 				arg msg, time, addr, recvPort;
-				var ctlName = ["freqL","freqR"];
 				msg.postln;
-				msg.do { arg x, y; synth.set(ctlName[y], x)};
+				synthDef.name.postln;
+				synthDef.synthSet(synth, msg);
+				//synth.set(
+				//	\sig, msg[3].asInteger,
+				//	\freqL, msg[2],
+				//	\freqR, msg[1],
+				//);
 			},
 			'/qml_gui_ctrl'
 		);
@@ -71,12 +76,18 @@ SDDef {
 			{
 				arg msg, time, addr, recvPort;
 				"setting sunthdef".postln;
-				msg[1].postln;
+				//msg[1].postln;
 				synthDef = this.getSynthDef(msg[1]);
 				synthDef.add;
-				synthDef.allControlNames[0].asString.split($ )[4].postln;
+				//synthDef.allControlNames[0].asString.split($ )[4].postln;
 				//msg.do { arg x, y; synth.set(ctlName[y], x)};
-				synth = Synth.new(synthDef.name);
+				synthDef.name.postln;
+				Routine({
+					"before wait".postln;
+					1.wait;
+					synth = Synth.new(synthDef.name);
+					"after wait".postln;
+				}).play;
 			},
 			'/qml_set_synthdef'
 		);
