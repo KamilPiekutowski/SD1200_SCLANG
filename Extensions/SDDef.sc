@@ -90,7 +90,7 @@ SDDef {
 			\DelayQuant_slider2d, {^SDReverb.new()},
 			\DelayMs_slider2d, {^SDReverb.new()},
 			\Distortion_slider2d, {^SDReverb.new()},
-			\Flanger_slide2d,   {^SDReverb.new()},
+			\Flanger_slider2d,   {^SDReverb.new()},
 		)
 	}
 }
