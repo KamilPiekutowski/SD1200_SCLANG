@@ -84,7 +84,7 @@ SDDef {
 				synthDef.name.postln;
 				Routine({
 					"before wait".postln;
-					0.5.wait;
+					0.1.wait;
 					synth = Synth.new(synthDef.name);
 					"after wait".postln;
 				}).play;
@@ -101,7 +101,7 @@ SDDef {
 
 			\Reverb_slider2d,   {^SDReverb.new()},
 			\DelayQuant_slider2d, {^SDDelayQuant.new()},
-			\DelayMs_slider2d, {^SDReverb.new()},
+			\DelayMs_slider2d, {^SDDelayMS.new()},
 			\Distortion_slider2d, {^SDReverb.new()},
 			\Flanger_slider2d,   {^SDReverb.new()},
 		)

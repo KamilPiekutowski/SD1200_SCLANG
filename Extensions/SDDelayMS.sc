@@ -1,4 +1,4 @@
-SDDelayQuant
+SDDelayMS
 {
 	var synthDef;
 
@@ -15,7 +15,7 @@ SDDelayQuant
 			var sig, env;
 			env = EnvGen.kr(Env.perc, t_gate);
 			sig = SinOsc.ar([freqL * 5000, freqR * 5000]) * env * 0.1;
-			sig = DelayC.ar(sig, 1, 0.3, 1, sig);
+			sig = DelayC.ar(sig, 1, 0.08, 1, sig);
 			Out.ar(0,sig);
 		});
 
