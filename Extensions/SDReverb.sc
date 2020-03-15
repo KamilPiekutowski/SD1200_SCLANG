@@ -11,7 +11,7 @@ SDReverb
 
 	init {
 		synthDef = SynthDef.new(\sinosc, {
-			arg freqL = 0.5, freqR = 0.5, sig = 0, mix = 0.25, room = 0.15, damp = 0.5;
+			arg freqL = 0.5, freqR = 0.5, sig = 0, mix = 0.80, room = 0.60, damp = 0.7;
 			sig = SinOsc.ar([freqL * 5000, freqR * 5000]) * sig * 0.80;
 			sig = FreeVerb.ar(
 				Pan2.ar(
@@ -21,7 +21,7 @@ SDReverb
 				mix,
 				room,
 				damp
-			)
+			);
 			Out.ar(0,sig);
 		});
 
@@ -42,3 +42,4 @@ SDReverb
 	}
 
 }
+
