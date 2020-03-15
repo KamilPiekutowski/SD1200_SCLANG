@@ -11,7 +11,12 @@ SDReverb
 
 	init {
 		synthDef = SynthDef.new(\sinosc, {
-			arg freqL = 0.5, freqR = 0.5, sig = 0, mix = 0.80, room = 0.60, damp = 0.7;
+			arg freqL = 0.5, freqR = 0.5,
+			knob0 = 0.80, knob1 = 0.60, knob2 = 0.70, knob3 = 0.00,
+			knob4 = 0.00, knob5 = 0.00, knob6 = 0.00, knob7 = 0.00;
+
+			var sig, mix = knob0, room = knob1, damp = knob2;
+
 			sig = SinOsc.ar([freqL * 5000, freqR * 5000]) * sig * 0.80;
 			sig = FreeVerb.ar(
 				Pan2.ar(
@@ -31,7 +36,7 @@ SDReverb
 	add {
 		synthDef.add;
 	}
-	synthSet { | synth, msg |
+	synthGUICtlSet { | synth, msg |
 		var ctlName = ["freqL", "freqR", "sig"];
 		msg.postln;
 		synth.set(
@@ -41,5 +46,10 @@ SDReverb
 		);
 	}
 
+	synthKnobCtlSet { | synth, knob, val |
+
+		("knob: " + knob + " val: " + val).postln;
+		synth.set(knob, val);
+	}
 }
 

@@ -8,6 +8,10 @@ SDDef {
 	// list of effects and their corrsponding templates
 	var fxList;
 
+	// serial
+	var port;
+	var serialRoutine;
+
 	// input from serial port
 	var knob0;
 	var knob1;
@@ -17,11 +21,6 @@ SDDef {
 	var knob5;
 	var knob6;
 	var knob7;
-
-
-    //synthDef {
-    //    ^synthDef
-    //}
 
 	// collect and send a list of predefined effects
 	collect_and_send_fx_list {
@@ -61,12 +60,7 @@ SDDef {
 				arg msg, time, addr, recvPort;
 				msg.postln;
 				synthDef.name.postln;
-				synthDef.synthSet(synth, msg);
-				//synth.set(
-				//	\sig, msg[3].asInteger,
-				//	\freqL, msg[2],
-				//	\freqR, msg[1],
-				//);
+				synthDef.synthGUICtlSet(synth, msg);
 			},
 			'/qml_gui_ctrl'
 		);
@@ -79,9 +73,8 @@ SDDef {
 				//msg[1].postln;
 				synthDef = this.getSynthDef(msg[1]);
 				synthDef.add;
-				//synthDef.allControlNames[0].asString.split($ )[4].postln;
-				//msg.do { arg x, y; synth.set(ctlName[y], x)};
 				synthDef.name.postln;
+
 				Routine({
 					"before wait".postln;
 					0.1.wait;
@@ -91,7 +84,42 @@ SDDef {
 			},
 			'/qml_set_synthdef'
 		);
-    }
+
+		//serial
+		port = SerialPort(
+			"//dev/ttyACM0",    //edit to match your port. SerialPort.listDevices
+			baudrate: 115200,    //check that baudrate is the same as in arduino sketch
+			crtscts: true);
+
+
+		serialRoutine = Routine.new({
+			var knob, val;
+			{
+				knob = port.read;
+				val = port.read;
+
+				switch (knob,
+
+					0,   { knob0 = \knob0;},
+					1,   { knob1 = \knob1;},
+					2,   { knob2 = \knob2;},
+					3,   { knob3 = \knob3;},
+					4,   { knob4 = \knob4;},
+					5,   { knob5 = \knob5;},
+					6,   { knob6 = \knob6;},
+					7,   { knob7 = \knob7;},
+
+				);
+
+				val = val.asFloat / 255.0;
+
+				synthDef.synthKnobCtlSet(synth, knob, val);
+
+			}.loop;
+		});
+
+		serialRoutine.play;
+	}
 
 	//SynthDef factory method
 	getSynthDef { | synthDefName |
