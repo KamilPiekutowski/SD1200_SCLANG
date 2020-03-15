@@ -95,12 +95,12 @@ SDDef {
 
 	//SynthDef factory method
 	getSynthDef { | synthDefName |
-		Server.hardFreeAll;		
-    
+		Server.hardFreeAll;
+
 		switch (synthDefName,
 
 			\Reverb_slider2d,   {^SDReverb.new()},
-			\DelayQuant_slider2d, {^SDReverb.new()},
+			\DelayQuant_slider2d, {^SDDelayQuant.new()},
 			\DelayMs_slider2d, {^SDReverb.new()},
 			\Distortion_slider2d, {^SDReverb.new()},
 			\Flanger_slider2d,   {^SDReverb.new()},
