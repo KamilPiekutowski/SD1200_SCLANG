@@ -29,7 +29,7 @@ SDDef {
 		fxList = [
 			"Reverb_slider2d",
 			"DelayQuant_slider2d",
-			"DelayMs_slider2d",
+			"DelayMS_slider2d",
 			"Distortion_slider2d",
 			"Flanger_slide2d",
 		];
@@ -101,7 +101,7 @@ SDDef {
 
 			\Reverb_slider2d,   {^SDReverb.new()},
 			\DelayQuant_slider2d, {^SDDelayQuant.new()},
-			\DelayMs_slider2d, {^SDDelayMS.new()},
+			\DelayMS_slider2d, {^SDDelayMS.new()},
 			\Distortion_slider2d, {^SDReverb.new()},
 			\Flanger_slider2d,   {^SDReverb.new()},
 		)
