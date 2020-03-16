@@ -45,7 +45,7 @@ SDDef {
 		//setting up the port
 		port = SerialPort(
 			"/dev/ttyACM0",    //edit to match your port. SerialPort.listDevices
-			baudrate: 115200,    //check that baudrate is the same as in arduino sketch
+			baudrate: 9600,    //check that baudrate is the same as in arduino sketch
 			crtscts: true);
 		"init".postln;
 		//get the fx list and send it back
@@ -86,39 +86,44 @@ SDDef {
 					0.1.wait;
 					synth = Synth.new(synthDef.name);
 
-					serialRoutine = Routine.new({
-						var knob, val;
-						{
-							knob = port.read;
-							val = port.read;
 
-							switch (knob,
-
-								0,   { knob = \knob0;},
-								1,   { knob = \knob1;},
-								2,   { knob = \knob2;},
-								3,   { knob = \knob3;},
-								4,   { knob = \knob4;},
-								5,   { knob = \knob5;},
-								6,   { knob = \knob6;},
-								7,   { knob = \knob7;},
-
-							);
-
-							val = val.asFloat / 255.0;
-							("knob: " + knob + " val: " + val).postln;
-							//synthDef.synthKnobCtlSet(synth, knob, val);
-
-						}.loop;
-					});
-
-					serialRoutine.play;
 
 					"after wait".postln;
 				}).play;
 			},
 			'/qml_set_synthdef'
 		);
+
+		serialRoutine = Routine.new({
+			var knob, value;
+			{
+				knob = port.read;
+				value = port.read;
+				/*
+				switch (knob - 54,
+
+				0,   { knob = \knob0;},
+				1,   { knob = \knob1;},
+				2,   { knob = \knob2;},
+				3,   { knob = \knob3;},
+				4,   { knob = \knob4;},
+				5,   { knob = \knob5;},
+				6,   { knob = \knob6;},
+				7,   { knob = \knob7;},
+
+				);*/
+
+				//val = val.asFloat / 255.0;
+				//knob.postln;
+				("knob: " + knob).postln;
+				("value: " + value).postln;
+				//1.wait;
+				//synthDef.synthKnobCtlSet(synth, knob, val);
+
+			}.loop;
+		});
+
+		serialRoutine.play;
 	}
 
 	//SynthDef factory method
